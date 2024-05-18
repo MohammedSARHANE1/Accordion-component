@@ -26,14 +26,13 @@ export default function App() {
     </>
   );
 }
-function Item({ item }) {
-  const [isOpen, setIsOpen] = useState(false);
-  function handleOpen() {
-    setIsOpen((isOpen) => !isOpen);
-  }
+function Item({ item ,curOpen ,handleOpen}) {
+  const isOpen=item.id===curOpen;
+  
+ 
   return (
-    <div className={`content-box ${isOpen ? "open" : ""}`}>
-      <div className="item" onClick={handleOpen}>
+    <div className={`content-box ${isOpen?"open":""}`}>
+      <div className="item" onClick={()=>handleOpen(item.id)}>
         <div className="gtitle">
           <p className="number">{`0${item.id}`}</p>
 
@@ -46,11 +45,16 @@ function Item({ item }) {
   );
 }
 function Accordion() {
+  const [curOpen, setcurOpen] = useState(null);
+  function handleOpen(id) {
+    setcurOpen(id)
+
+  }
   return (
     <ul className="accordion">
       {faqs.map((item) => (
         <li key={item.id}>
-          <Item item={item} />
+          <Item item={item} curOpen={curOpen} handleOpen={handleOpen} />
         </li>
       ))}
     </ul>
